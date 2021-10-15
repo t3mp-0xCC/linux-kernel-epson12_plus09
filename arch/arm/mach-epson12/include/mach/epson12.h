@@ -1,0 +1,316 @@
+/*
+ *  Copyright (C) 2007 Samsung Electronics TLD.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * History
+ *
+ */
+
+/* Copyright (c)SEIKO EPSON CORPORATION 2012. All rights reserved. */
+
+#ifndef __EPSON12_ADDRESS_H
+#define __EPSON12_ADDRESS_H
+
+#define NR_IRQS_EPSON12	(160)
+
+#if !defined(NR_IRQS) || (NR_IRQS < NR_IRQS_EPSON12)
+#undef NR_IRQS
+#define NR_IRQS  NR_IRQS_EPSON12
+#endif
+
+/* MMU address offset */
+#define MMU_OFFSET_4K	0x10000
+#define MMU_OFFSET_8K	0x20000
+#define MMU_OFFSET_16K	0x40000
+#define MMU_OFFSET_32K	0x80000
+
+/*
+ * EPSON12 Core private space
+ */
+#define CORE_PM_BASE	0xE9100000 /* CORTEXA9MP(internal register) */
+#define SCU_BASE	0x0000
+#define INTI_BASE	0x0100
+#define GTIMER_BASE	0x0200
+#define PTIMER_BASE	0x0600
+#define INTD_BASE	0x1000
+
+/*
+ * EPSON12 MISC WH
+ */
+#define MISC_WH_BASE			0x24030000
+
+#if defined(CONFIG_MACH_EPSON12_M)
+#define MISC_WH_ISET_MSK0		0x0000
+#define MISC_WH_ISET_MSK1		0x0004
+#define MISC_WH_ISET_MSK2		0x0008
+#define MISC_WH_IRESET_MSK0		0x000C
+#define MISC_WH_IRESET_MSK1		0x0010
+#define MISC_WH_IRESET_MSK2		0x0014
+#define MISC_WH_INT_MSK0		0x0018
+#define MISC_WH_INT_MSK1		0x001C
+#define MISC_WH_INT_MSK2		0x0020
+#define MISC_WH_INT_INV0		0x0024
+#define MISC_WH_INT_INV1		0x0028
+#define MISC_WH_INT_INV2		0x002C
+#define MISC_WH_ISET_CPU20		0x0030
+#define MISC_WH_IRESET_CPU20		0x0034
+#define MISC_WH_INT_CPU20		0x0038
+#define MISC_WH_IMASK_CPU20		0x003C
+#define MISC_WH_ISET_CPU21		0x0040
+#define MISC_WH_IRESET_CPU21		0x0044
+#define MISC_WH_INT_CPU21		0x0048
+#define MISC_WH_IMASK_CPU21		0x004C
+#define	MISC_WH_INT_ST0			0x0050
+#define	MISC_WH_INT_ST1			0x0054
+#define	MISC_WH_INT_ST2			0x0058
+#define	MISC_WH_GPIO_FIL0		0x005C
+#define	MISC_WH_GPIO_FIL1		0x0060
+#define	MISC_WH_GPIO_FIL2		0x0064
+#define	MISC_WH_GPIO_FIL3		0x0068
+#define	MISC_WH_GPIO_MUX		0x006C
+#define	MISC_WH_GPIO_INV0		0x0070
+#define	MISC_WH_GPIO_INV1		0x0074
+#define	MISC_WH_GPIO_MSK0		0x0078
+#define	MISC_WH_GPIO_MSK1		0x007C
+#define	MISC_WH_GPIO_EDG0		0x0080
+#define	MISC_WH_GPIO_EDG1		0x0084
+#define	MISC_WH_GPIO_ST0		0x0088
+#define	MISC_WH_GPIO_ST1		0x008C
+#define MISC_WH_SET_XOVC		0x0090
+#define MISC_WH_RESET_XOVC		0x0094
+#define MISC_WH_XOVC			0x0098
+/* defined(CONFIG_MACH_EPSON12_M) */
+#elif defined(CONFIG_MACH_EPSON12_H)
+#define MISC_WH_ISET_MSK0		0x0000
+#define MISC_WH_ISET_MSK1		0x0004
+#define MISC_WH_IRESET_MSK0		0x0008
+#define MISC_WH_IRESET_MSK1		0x000C
+#define MISC_WH_INT_MSK0		0x0010
+#define MISC_WH_INT_MSK1		0x0014
+#define MISC_WH_INT_INV0		0x0018
+#define MISC_WH_INT_INV1		0x001C
+#define MISC_WH_ISET_CPU20		0x0020
+#define MISC_WH_IRESET_CPU20		0x0024
+#define MISC_WH_INT_CPU20		0x0028
+#define MISC_WH_IMASK_CPU20		0x002C
+#define MISC_WH_ISET_CPU21		0x0030
+#define MISC_WH_IRESET_CPU21		0x0034
+#define MISC_WH_INT_CPU21		0x0038
+#define MISC_WH_IMASK_CPU21		0x003C
+
+#define MISC_WH_NMI_MSK			0x0040
+#define MISC_WH_NMI_INV			0x0044
+
+#define	MISC_WH_INT_ST0			0x0060
+#define	MISC_WH_INT_ST1			0x0064
+
+#define MISC_WH_INV_CPU20		0x0070
+#define MISC_WH_INV_CPU21		0x0074
+
+#define MISC_INT_SEL47_35		0x0080
+
+#define MISC_WH_XOVC			0x0090
+#define MISC_WH_BITOR_XOVC		0x0094
+#define MISC_WH_BITAND_XOVC		0x0098
+#endif /* defined(CONFIG_MACH_EPSON12_H) */
+
+/*
+ * EPSON12 MISC BK
+ */
+#define MISC_BK_BASE			0xF2030000
+
+#if defined(CONFIG_MACH_EPSON12_M)
+#define MISC_BK_ISET_MSK		0x0000
+#define MISC_BK_IRESET_MSK		0x0004
+#define MISC_BK_INT_MSK			0x0008
+#define MISC_BK_INT_INV			0x000C
+#define MISC_BK_ISET_CPU01		0x0010 /* Int set RTOS -> Linux */
+#define MISC_BK_IRESET_CPU01		0x0014 /* Int reset RTOS -> Linux */
+#define MISC_BK_INT_CPU01		0x0018 /* Int set/reset RTOS -> Linux */
+#define MISC_BK_IMASK_CPU01		0x001C /* Linux int mask */
+#define MISC_BK_ISET_CPU02		0x0020
+#define MISC_BK_IRESET_CPU02		0x0024
+#define MISC_BK_INT_CPU02		0x0028
+#define MISC_BK_IMASK_CPU02		0x002C
+#define MISC_BK_ISET_CPU10		0x0030 /* Int set Linux -> RTOS */
+#define MISC_BK_IRESET_CPU10		0x0034 /* Int reset Linux -> RTOS */
+#define MISC_BK_INT_CPU10		0x0038 /* Int set/reset Linux -> RTOS */
+#define MISC_BK_IMASK_CPU10		0x003C /* RTOS int mask */
+#define MISC_BK_ISET_CPU12		0x0040
+#define MISC_BK_IRESET_CPU12		0x0044
+#define MISC_BK_INT_CPU12		0x0048
+#define MISC_BK_IMASK_CPU12		0x004C
+#define	MISC_BK_INT_ST			0x0050
+/* defined(CONFIG_MACH_EPSON12_M) */
+#elif defined(CONFIG_MACH_EPSON12_H)
+#define MISC_BK_ISET_MSK0		0x0000
+#define MISC_BK_ISET_MSK1		0x0004
+#define MISC_BK_IRESET_MSK0		0x0008
+#define MISC_BK_IRESET_MSK1		0x000C
+#define MISC_BK_INT_MSK0		0x0010
+#define MISC_BK_INT_MSK1		0x0014
+#define MISC_BK_INT_INV0		0x0018
+#define MISC_BK_INT_INV1		0x001C
+#define MISC_BK_ISET_CPU01		0x0020 /* Int set RTOS -> Linux */
+#define MISC_BK_IRESET_CPU01		0x0024 /* Int reset RTOS -> Linux */
+#define MISC_BK_INT_CPU01		0x0028 /* Int set/reset RTOS -> Linux */
+#define MISC_BK_IMASK_CPU01		0x002C /* Linux int mask */
+#define MISC_BK_ISET_CPU02		0x0030
+#define MISC_BK_IRESET_CPU02		0x0034
+#define MISC_BK_INT_CPU02		0x0038
+#define MISC_BK_IMASK_CPU02		0x003C
+#define MISC_BK_ISET_CPU10		0x0040 /* Int set Linux -> RTOS */
+#define MISC_BK_IRESET_CPU10		0x0044 /* Int reset Linux -> RTOS */
+#define MISC_BK_INT_CPU10		0x0048 /* Int set/reset Linux -> RTOS */
+#define MISC_BK_IMASK_CPU10		0x004C /* RTOS int mask */
+#define MISC_BK_ISET_CPU12		0x0050
+#define MISC_BK_IRESET_CPU12		0x0054
+#define MISC_BK_INT_CPU12		0x0058
+#define MISC_BK_IMASK_CPU12		0x005C
+#define	MISC_BK_INT_ST0			0x0060
+#define	MISC_BK_INT_ST1			0x0064
+
+#define MISC_BK_INV_CPU01		0x0070
+#define MISC_BK_INV_CPU10		0x0074
+#define MISC_BK_INV_CPU02		0x0078
+#define MISC_BK_INV_CPU12		0x007C
+
+#define MISC_INT_SEL28_23		0x0080
+
+#define MISC_MSIG_SEL1			0x0090
+#define MISC_MSIG_SEL2			0x0094
+#define MISC_MSIG_SEL3			0x0098
+#define MISC_MSIG_SEL4			0x009C
+#define MISC_MSIG_SEL5			0x00A0
+#define MISC_MSIG_SEL6			0x00A4
+#endif /* defined(CONFIG_MACH_EPSON12_H) */
+
+/*
+ * EPSON12 Shared SRAM
+ */
+#define EPSON12_SRAM_BASE		0xE9000000 /* message_sram */
+#define SCRATCH_PAD_OFFSET		0x3FF4 /* boot scratch pad */
+
+/*
+ * EPSON12 SQROM Serial flash
+ */
+#if defined(CONFIG_MTD_M25P80)
+#if defined(CONFIG_SPI_EPSON_SFLU3)
+#define EPSON12_SFLASH_BASE		0x08000000
+#define EPSON12_SFLASH_SIZE		0x00800000
+
+#define EPSON_FLASHROM0_BASE	0x00000000
+#define EPSON_FLASHROM0_SIZE	0x01000000
+#define EPSON_FLASHROM1_BASE	0x08000000
+#define EPSON_FLASHROM1_SIZE	0x01000000
+#define EPSON_FLASHROM2_BASE	0x0c000000
+#define EPSON_FLASHROM2_SIZE	0x01000000
+#else /* defined(CONFIG_SPI_EPSON_SQROM) or default */
+#define EPSON12_SFLASH_BASE		0x00000000
+#define EPSON12_SFLASH_SIZE		0x01000000
+#endif
+#endif
+
+/*
+ * EPSON12 SFLU3 Serial flash controller
+ */
+#if defined(CONFIG_SPI_EPSON_SFLU3)
+#define EPSON12_SFLU3_BASE		0x26000000
+#endif
+
+/*
+ * EPSON12 SQROM Serial flash controller
+ */
+#if defined (CONFIG_SPI_EPSON_SQROM)
+#define EPSON12_SQROM_BASE		0x20010000
+#endif
+
+/* GPIO and MISC Virtual address */
+#define EPSON12_GPIO_VA			IO_ADDRESS(EPSON12_GPIO_BASE)
+#define EPSON12_MISC_VA			IO_ADDRESS(EPSON12_MISC_BASE)
+
+/*
+ * EPSON12 Peripheral addresses
+ */
+#define EPSON12_EHCI0_BASE		0x31000000 /* USBH_EHCI0_SFR */
+#define EPSON12_OHCI0_BASE		0x31010000 /* USBH_OHCI0_SFR */
+#define EPSON12_USBH_CFG0_BASE		0x31020000 /* USBH_CFG0 */
+
+#define EPSON12_EHCI1_BASE		0x31100000 /* USBH_EHCI1_SFR */
+#define EPSON12_OHCI1_BASE		0x31110000 /* USBH_OHCI1_SFR */
+#define EPSON12_USBH_CFG1_BASE		0x31120000 /* USBH_CFG1 */
+
+#define EPSON12_EHCI2_BASE		0x31200000 /* USBH_EHCI2_SFR */
+#define EPSON12_OHCI2_BASE		0x31210000 /* USBH_OHCI2_SFR */
+#define EPSON12_USBH_CFG2_BASE		0x31220000 /* USBH_CFG2 */
+
+#define EPSON12_GMAC_BASE		0x31800000 /* ETHERNET_SFR */
+#define EPSON12_GMAC_CFG_BASE		(0x31810000 + MMU_OFFSET_4K) /* ETHERNET_CFG */
+#define EPSON12_GMAC_DESC_BASE          0x41C00000
+
+#define EPSON12_EPHY_BASE		0x00000001
+
+#define EPSON12_UART0_BASE		0x30280000 /* UART0_SFR */
+#define EPSON12_UART1_BASE		0x30290000 /* UART1_SFR */
+#define EPSON12_UART2_BASE		0x302A0000 /* UART2_SFR */
+
+#define EPSON12_SPI_BASE		0xF2000000 /* SPIU */
+
+#define EPSON12_TIMER_BASE		0x22000000 /* TIMERU */
+#define EPSON12_TIMERU0			0x0000     /* TIMERU0 */
+#define EPSON12_TIMERU1			0x0100     /* TIMERU1 */
+#define EPSON12_TIMERU2			0x0200     /* TIMERU2 */
+#define EPSON12_TIMERU3			0x0300     /* TIMERU3 */
+#define EPSON12_TIMERU4			0x0400     /* TIMERU4 */
+
+#define EPSON12_SDMMC_BASE		0x31C00000 /* SDMMC */
+
+#define EPSON12_GPIO_BASE		0x2A030000 /* GPIOU_TOP */
+#define EPSON12_MISC_BASE		0x30200000 /* MISC_SFR */
+#define EPSON12_DMU_BASE		0x30210000 /* DMU_SFR */
+
+#define EPSON12_SCN_BASE		0x28000000 /* SCN_TOP */
+
+#if defined(CONFIG_MACH_EPSON12_H)
+#define EPSON12_EIP94_BASE			0x34000000 /* IPSEC */
+#define EPSON12_EIP94_PE_RING_CTRL_OFFSET	0x0054
+#define	EPSON12_EIP94_PE_RING_CTRL_RETRYMASK 	0x03FF0000
+#define	EPSON12_EIP94_PE_RING_CTRL_POLLMASK	0x00000FFF
+#define	EPSON12_EIP94_PE_RING_CTRL_DIVISORVALUE	0x00010001
+#define	EPSON12_EIP94_PE_RING_CTRL_CONTINUOUS	0x80000000
+
+#define EPSON12_LP_MISC			0x28010000 /* LP_MISC */
+#define EPSON12_LFP_IOU			0x2A350000 /* LFP_IOU */
+
+/*
+ * EPSON12 L2x0 outer cache controller
+ */
+#define EPSON12_L2CC_BASE		0xE9200000 /* L2CC_SFR */
+
+/*
+ * EPSON12 PCI-Express controller
+ */
+#define EPSON12_PCIE0_BASE		0xC0000000 /* PCI-EX Link0 */
+#define EPSON12_PCIE1_BASE		0xD8000000 /* PCI-EX Link1 */
+#define EPSON12_PCIE_DBI0_BASE		0xE8000000 /* PCIE_DBI0 */
+#define EPSON12_PCIE_DBI1_BASE		0xE8100000 /* PCIE_DBI1 */
+#define EPSON12_PCIE_PHY_BASE           0x33000000 /* PCIE_PHY */
+#define EPSON12_PCIE_DMA_BASE		0xEA400000 /* PCIE_DMAC_SFR */
+#endif /* defined(CONFIG_MACH_EPSON12_H) */
+
+#endif
+
+/* END */

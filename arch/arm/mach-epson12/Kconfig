@@ -1,0 +1,251 @@
+#
+# Copyright (c)SEIKO EPSON CORPORATION 2012-2013. All rights reserved.
+#
+
+menu "EPSON12 platform type"
+	depends on ARCH_EPSON12
+
+config MACH_EPSON12
+	bool "Support EPSON12 platform"
+	select ARM_GIC
+	help
+	  Include support for the ARM(R) EPSON12 platform.
+
+choice
+	prompt "EPSON12 platform type"
+	default MACH_EPSON12_M
+	
+config MACH_EPSON12_M
+	bool "Support EPSON12M platform"
+	depends on MACH_EPSON12
+	help
+	  Enable support for the EPSON12M platform.
+	  
+config MACH_EPSON12_H
+	bool "Support EPSON12H platform"
+	depends on MACH_EPSON12
+	help
+	  Enable support for the EPSON12H platform.
+
+endchoice
+
+choice
+	prompt "EPSON12 design type"
+	default MACH_EPSON12_DIVI
+	
+config MACH_EPSON12_DIVI
+	bool "Support EPSON12_DIVI design"
+	depends on MACH_EPSON12
+	help
+	  Enable support for the EPSON12_DIVI design.
+	
+config MACH_EPSON12_DIVL
+	bool "Support EPSON12_DIVL design"
+	depends on MACH_EPSON12
+	help
+	  Enable support for the EPSON12_DIVL design.
+	
+config MACH_EPSON12_DIVF
+	bool "Support EPSON12_DIVF design"
+	depends on MACH_EPSON12
+	help
+	  Enable support for the EPSON12_DIVF design.
+	
+endchoice
+
+config EPSON12_WITH_RTOS
+	bool "With the RTOS"
+	depends on MACH_EPSON12
+	help
+	  Choose when RTOS is running.
+
+config EPSON12_DISABLE_CACHE_L2X0
+	bool "Disable the L2x0 outer cache controller"
+	depends on MACH_EPSON12_H && !CACHE_L2X0
+	help
+	  Completely block access to the L2 cache.
+	  RTOS is required to support this feature.
+
+config EPSON12_WAIT_RTOS_WAKEUP
+	bool "Wait RTOS wakeup"
+	depends on MACH_EPSON12_DIVL
+	help
+	  Choose when wait RTOS magic number.
+
+config EPSON12_VIRTUAL_PLATFORM
+	bool "Support virtual platform"
+	depends on MACH_EPSON12
+	help
+	  Choose when running on a virtual platform.
+          
+choice
+	prompt "EPSON12 Ethernet PHY type"
+	default EPSON12_HAS_RTL8201F
+
+config EPSON12_HAS_RTL8201F
+	bool "RTL8201F"
+	depends on STMMAC_ETH
+	help
+	  Enable support for the RTL8201F ethernet phy.
+
+config EPSON12_HAS_BCM54610
+	bool "BCM54610"
+	select EPSON12_HAS_GIGABIT_PHY
+	depends on STMMAC_ETH
+	help
+	  Enable support for the BCM54610 ethernet phy.
+
+config EPSON12_HAS_AR8035
+	bool "AR8035"
+	select EPSON12_HAS_GIGABIT_PHY
+	depends on STMMAC_ETH
+	help
+	  Enable support for the AR8035 ethernet phy.
+
+endchoice
+
+config EPSON12_HAS_GIGABIT_PHY
+	bool "Support EPSON12 Gigabit Ethernet PHY"
+	depends on EPSON12_HAS_BCM54610 || EPSON12_HAS_AR8035
+	help
+	  Enable support for the EPSON12 gigabit ethernet phy.
+
+config EPSON12_ETHPHY_AUTO_SWITCH
+	bool "Support EPSON12 Ethernet PHY automatic switch"
+	depends on STMMAC_ETH && EPSON12_WITH_RTOS
+	help
+	  Enable support for the ethernet phy automatic switch.
+
+choice
+	prompt "EPSON12 Ethernet PHY H/W reset mode"
+	depends on STMMAC_ETH
+	default ETHPHY_HWRESET_12H_AR8035_DIVL if MACH_EPSON12_H
+	default ETHPHY_HWRESET_12M_AR8035
+
+config ETHPHY_HWRESET_12M_BCM54610
+	bool "Mode 12M BCM54610"
+	depends on MACH_EPSON12_M && !EPSON12_WITH_RTOS
+	help
+	  Enable support for the EPSON12M BCM54610 platform.
+
+config ETHPHY_HWRESET_12M_AR8035
+	bool "Mode 12M AR8035"
+	depends on MACH_EPSON12_M
+	help
+	  Enable support for the EPSON12M AR8035 platform.
+
+config ETHPHY_HWRESET_12H_BCM54610_DIVF
+	bool "Mode 12H BCM54610 DivF"
+	depends on MACH_EPSON12_H && !EPSON12_WITH_RTOS
+	help
+	  Enable support for the EPSON12H BCM54610 DivF platform.
+
+config ETHPHY_HWRESET_12H_AR8035_DIVL
+	bool "Mode 12H AR8035 DivL"
+	depends on MACH_EPSON12_H
+	help
+	  Enable support for the EPSON12H AR8035 DivL platform.
+
+config ETHPHY_HWRESET_12H_AR8035_DIVF
+	bool "Mode 12H AR8035 DivF"
+	depends on MACH_EPSON12_H
+	help
+	  Enable support for the EPSON12H AR8035 DivF platform.
+
+config ETHPHY_HWRESET_12H_AR8035_DIVI
+	bool "Mode 12H AR8035 DivI"
+	depends on MACH_EPSON12_H
+	help
+	  Enable support for the EPSON12H AR8035 DivI platform.
+
+endchoice
+
+choice
+	prompt "EPSON12 USB EHCI host port"
+	depends on USB_SEC_EHCI_HCD
+	default USE_EHCIHOST_0
+
+config USE_EHCIHOST_0
+	bool "port0"
+
+config USE_EHCIHOST_1
+	bool "port1"
+
+config USE_EHCIHOST_2
+	bool "port2"
+
+endchoice
+
+choice
+	prompt "EPSON12 USB OHCI host port"
+	depends on USB_SEC_OHCI_HCD
+	default USE_OHCIHOST_0
+
+config USE_OHCIHOST_0
+	bool "port0"
+
+config USE_OHCIHOST_1
+	bool "port1"
+
+config USE_OHCIHOST_2
+	bool "port2"
+
+endchoice
+
+config EPSON12_TIMER
+	bool "Support EPSON12 tick timer"
+	depends on MACH_EPSON12
+	default y
+	help 
+	  Enable support for the EPSON12 timer.
+
+config EPSON12_TIMER_DBG
+	bool "Debug message for EPSON12 timer"
+	depends on EPSON12_TIMER
+	default y
+	help 
+	  Debug message for EPSON12 timer.
+
+config MACH_EPSON12_DBG
+	bool "Debug message for EPSON12"
+	depends on MACH_EPSON12
+	default n
+	help 
+	  Debug message for EPSON12.
+
+choice
+	prompt "EPSON12 Power Save Mode"
+	depends on MACH_EPSON12
+	default POWER_SAVING_SWITCH_L1
+
+config POWER_SAVING_SWITCH_L1
+	bool "level1"
+
+config POWER_SAVING_SWITCH_L2
+	bool "level2"
+
+endchoice
+
+config MACH_EPSON12_FLD_ACCESS_CTRL
+	bool "Flash ROM Device Access CTRL at SPI Driver"
+	depends on MACH_EPSON12
+	default n
+	help 
+	  impliment at spi device driver.
+
+config MACH_EPSON12_EMG_SYSTEM_STOP
+	bool "Emargency stop by fiq or irq signal by Other Core"
+	depends on MACH_EPSON12
+	default n
+	help 
+	  FIQ and IRQ 0x0f190f19, 0xdeaddead write to scrachpad.
+
+config EMG_IRQ_NO
+	int "Emargency irq signal No. (32-160)"
+	range 32 160
+	depends on MACH_EPSON12_EMG_SYSTEM_STOP
+	default "54"
+
+source "arch/arm/mach-epson12/Kconfig-pcie"
+
+endmenu

@@ -1,0 +1,25 @@
+#
+# Copyright (c)SEIKO EPSON CORPORATION 2012. All rights reserved.
+#
+
+config EPSON12_PCIE
+	bool "Support EPSON12 PCI Express"
+	depends on MACH_EPSON12_H && PCI
+	default y
+	help
+	  Say Y here if your system has a PCI-E (x1/x2) port
+	  and you want to use a PCI-E device.
+
+config EPSON12_PCIE_PORT1
+	bool
+	depends on EPSON12_PCIE
+	default y
+
+config EPSON12_PCIE_PORT0
+	bool "Enable support for two PCI Express ports (EXPERIMENTAL)"
+	select PCI_DOMAINS
+	depends on EPSON12_PCIE && EXPERIMENTAL
+	default n
+	help
+	  Say Y here if your system has two PCI-E x1 ports
+	  and you want to use PCI-E devices. If unsure, say 'N'.

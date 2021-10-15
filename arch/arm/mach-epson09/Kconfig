@@ -1,0 +1,85 @@
+#
+# Copyright (c)SEIKO EPSON CORPORATION 2014-2016. All rights reserved.
+#
+
+menu "EPSON09 platform type"
+	depends on ARCH_EPSON09
+
+config MACH_EPSON09
+	bool "Support EPSON09 platform"
+	select CPU_ARM926T
+	default y
+	help
+	  Include support for the ARM(R) EPSON09 platform.
+
+config EPSON09_WITH_RTOS
+	bool "With the RTOS"
+	depends on MACH_EPSON09
+	help
+	  Choose when RTOS is running.
+
+config MACH_EPSON09_DBG
+	bool "Debug message for EPSON09"
+	depends on MACH_EPSON09
+	default n
+	help
+	  Debug message for EPSON09.
+
+config MACH_EPSON12_DMESG_FROM_UART
+	bool "Transfer to dmesg from uart"
+	depends on MACH_EPSON09
+	default y
+	help 
+	  Transfer to dmesg from uart function.
+
+config MACH_EPSON12_DMESG_TARGET_PORT
+	string "Default dmesg target port"
+	depends on MACH_EPSON12_DMESG_FROM_UART
+	default "ttyS0"
+	help
+	 Dmesg target UART port.
+
+config MACH_EPSON09_FLD_ACCESS_CTRL
+	bool "Flash ROM Device Access CTRL at SPI Driver"
+	depends on MACH_EPSON09
+	default n
+	help
+	  impliment at spi device driver.
+
+config EPSON09_TIMER
+	bool "Support EPSON09 tick timer"
+	depends on MACH_EPSON09
+	default y
+	help
+	  Enable support for the EPSON09 timer.
+
+config EPSON09_TIMER_DBG
+	bool "Debug message for EPSON09 timer"
+	depends on EPSON09_TIMER
+	default y
+	help
+	  Debug message for EPSON12 timer.
+
+config MACH_EPSON09_EMG_SYSTEM_STOP
+	bool "Emargency stop by fiq or irq signal by Other Core"
+	depends on MACH_EPSON09
+	default n
+	help
+	  FIQ and IRQ 0xdeaddead, 0xdeaddead write to scrachpad.
+
+config MACH_EPSON09_EMG_SYSTEM_STOP_FOR09SU
+	bool "Emargency stop by fiq or irq signal by Other Core on 09SU"
+	depends on MACH_EPSON09
+	default n
+	help
+	  different irq use, 09SN to 09SU.
+
+config EPSON09_FLASH_ROM_SIZE
+	string "FlashROM size "
+	depends on MACH_EPSON09
+	default "SZ_8M"
+	help
+	 Dmesg target UART port.
+
+
+endmenu
